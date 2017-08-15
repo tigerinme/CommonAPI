@@ -39,51 +39,14 @@
 		USER_HOME=/home/sebastien -->
 	<!-- USER_HOME=/home/sebastien fileName=myApp.log destination=${USER_HOME}/${fileName} -->
 
-	<timestamp key="byDay" datePattern="yyyyMMdd" />
-	<timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"
-		timeReference="contextBirth" />
-
-	<!-- <appender name="FILE" append="false" class="ch.qos.logback.core.FileAppender"> 
-		<file>myApp.log</file> <file>${USER_HOME}/myApp.log</file> <file>log-${bySecond}.txt</file> 
-		<encoder> <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n 
-		</pattern> </encoder> </appender> -->
-
-	<!-- 能够将日志根据数量和大小进行归档压缩并删除无用日志 -->
-	<appender name="FILE"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logFile.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- daily rollover -->
-			<fileNamePattern>/MyLogTest/%d{yyyy-MM,aux}/logFile.%d{yyyy-MM-dd}.log
-			</fileNamePattern>
-
-			<!-- keep 30 days' worth of history capped at 3GB total size -->
-			<maxHistory>30</maxHistory>
-			<totalSizeCap>3GB</totalSizeCap>
-
-		</rollingPolicy>
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>myApp.log</file>
+		<!-- <file>${USER_HOME}/myApp.log</file> -->
+		<!-- <fileNamePattern>./%d{yyyy-MM}/%d{yyyy-MM-dd}.log</fileNamePattern> -->
 
 		<encoder>
-			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n%ex{full}
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
 			</pattern>
-		</encoder>
-	</appender>
-
-	<appender name="ROLLING"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>mylog.txt</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>/MyLogTest/%d{yyyy-MM,aux}/mylog-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
-			<!-- each file should be at most 100MB, keep 60 days worth of history, 
-				but at most 20GB -->
-			<maxFileSize>100MB</maxFileSize>
-			<maxHistory>60</maxHistory>
-			<totalSizeCap>20GB</totalSizeCap>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%msg%n%ex{full} </pattern>
 		</encoder>
 	</appender>
 
@@ -92,7 +55,7 @@
 			by default -->
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
-				%msg%n%ex{full}</pattern>
+				%msg%n</pattern>
 		</encoder>
 	</appender>
 
@@ -108,6 +71,5 @@
 	<root level="debug" withJansi="true">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
-		<appender-ref ref="ROLLING" />
 	</root>
 </configuration>

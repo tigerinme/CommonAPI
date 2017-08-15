@@ -11,5 +11,6 @@ public class Test {
 		LOG.debug("debug");
 		LOG.info("info");
 		LOG.error("error");
+		double i = 1/0;
 	}
 }
